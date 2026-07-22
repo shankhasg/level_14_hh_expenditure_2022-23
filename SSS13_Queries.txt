@@ -1,0 +1,164 @@
+STEPS TO CREATE THE Z-SCORE TABLE
+
+--1. CREATE the strata table
+CREATE TABLE SSS13_2023_level_14_section_a1_b1_c1 LIKE 2023_level_14_section_a1_b1_c1;
+
+-- 2. Then insert matching rows
+INSERT INTO `SSS13_2023_level_14_section_a1_b1_c1` SELECT B.*  FROM `2023_level_14_section_a1_b1_c1` B INNER JOIN `2023_hhid_13` A ON B.hhid = A.hhid_13;
+
+-- 3. Create the pivot table
+CREATE TABLE SSS13_2023_level_14_section_a1_b1_c1_pivot AS SELECT hhid, MAX(CASE WHEN ba1b1c1_2 = '099' THEN ba1b1c1_3 ELSE 0 END) AS code_099, MAX(CASE WHEN ba1b1c1_2 = '129' THEN ba1b1c1_3 ELSE 0 END) AS code_129, MAX(CASE WHEN ba1b1c1_2 = '139' THEN ba1b1c1_3 ELSE 0 END) AS code_139, MAX(CASE WHEN ba1b1c1_2 = '159' THEN ba1b1c1_3 ELSE 0 END) AS code_159, MAX(CASE WHEN ba1b1c1_2 = '169' THEN ba1b1c1_3 ELSE 0 END) AS code_169, MAX(CASE WHEN ba1b1c1_2 = '179' THEN ba1b1c1_3 ELSE 0 END) AS code_179, MAX(CASE WHEN ba1b1c1_2 = '189' THEN ba1b1c1_3 ELSE 0 END) AS code_189, MAX(CASE WHEN ba1b1c1_2 = '199' THEN ba1b1c1_3 ELSE 0 END) AS code_199, MAX(CASE WHEN ba1b1c1_2 = '219' THEN ba1b1c1_3 ELSE 0 END) AS code_219, MAX(CASE WHEN ba1b1c1_2 = '239' THEN ba1b1c1_3 ELSE 0 END) AS code_239, MAX(CASE WHEN ba1b1c1_2 = '249' THEN ba1b1c1_3 ELSE 0 END) AS code_249, MAX(CASE WHEN ba1b1c1_2 = '269' THEN ba1b1c1_3 ELSE 0 END) AS code_269, MAX(CASE WHEN ba1b1c1_2 = '279' THEN ba1b1c1_3 ELSE 0 END) AS code_279, MAX(CASE WHEN ba1b1c1_2 = '289' THEN ba1b1c1_3 ELSE 0 END) AS code_289, MAX(CASE WHEN ba1b1c1_2 = '299' THEN ba1b1c1_3 ELSE 0 END) AS code_299, MAX(CASE WHEN ba1b1c1_2 = '309' THEN ba1b1c1_3 ELSE 0 END) AS code_309, MAX(CASE WHEN ba1b1c1_2 = '319' THEN ba1b1c1_3 ELSE 0 END) AS code_319, MAX(CASE WHEN ba1b1c1_2 = '329' THEN ba1b1c1_3 ELSE 0 END) AS code_329, MAX(CASE WHEN ba1b1c1_2 = '349' THEN ba1b1c1_3 ELSE 0 END) AS code_349, MAX(CASE WHEN ba1b1c1_2 = '379' THEN ba1b1c1_3 ELSE 0 END) AS code_379, MAX(CASE WHEN ba1b1c1_2 = '389' THEN ba1b1c1_3 ELSE 0 END) AS code_389, MAX(CASE WHEN ba1b1c1_2 = '399' THEN ba1b1c1_3 ELSE 0 END) AS code_399, MAX(CASE WHEN ba1b1c1_2 = '409' THEN ba1b1c1_3 ELSE 0 END) AS code_409, MAX(CASE WHEN ba1b1c1_2 = '419' THEN ba1b1c1_3 ELSE 0 END) AS code_419, MAX(CASE WHEN ba1b1c1_2 = '429' THEN ba1b1c1_3 ELSE 0 END) AS code_429, MAX(CASE WHEN ba1b1c1_2 = '439' THEN ba1b1c1_3 ELSE 0 END) AS code_439, MAX(CASE WHEN ba1b1c1_2 = '459' THEN ba1b1c1_3 ELSE 0 END) AS code_459, MAX(CASE WHEN ba1b1c1_2 = '479' THEN ba1b1c1_3 ELSE 0 END) AS code_479, MAX(CASE WHEN ba1b1c1_2 = '499' THEN ba1b1c1_3 ELSE 0 END) AS code_499, MAX(CASE WHEN ba1b1c1_2 = '519' THEN ba1b1c1_3 ELSE 0 END) AS code_519, MAX(CASE WHEN ba1b1c1_2 = '529' THEN ba1b1c1_3 ELSE 0 END) AS code_529, MAX(CASE WHEN ba1b1c1_2 = '539' THEN ba1b1c1_3 ELSE 0 END) AS code_539, MAX(CASE WHEN ba1b1c1_2 = '559' THEN ba1b1c1_3 ELSE 0 END) AS code_559, MAX(CASE WHEN ba1b1c1_2 = '569' THEN ba1b1c1_3 ELSE 0 END) AS code_569, MAX(CASE WHEN ba1b1c1_2 = '579' THEN ba1b1c1_3 ELSE 0 END) AS code_579, MAX(CASE WHEN ba1b1c1_2 = '599' THEN ba1b1c1_3 ELSE 0 END) AS code_599, MAX(CASE WHEN ba1b1c1_2 = '609' THEN ba1b1c1_3 ELSE 0 END) AS code_609, MAX(CASE WHEN ba1b1c1_2 = '619' THEN ba1b1c1_3 ELSE 0 END) AS code_619, MAX(CASE WHEN ba1b1c1_2 = '629' THEN ba1b1c1_3 ELSE 0 END) AS code_629, MAX(CASE WHEN ba1b1c1_2 = '639' THEN ba1b1c1_3 ELSE 0 END) AS code_639, MAX(CASE WHEN ba1b1c1_2 = '649' THEN ba1b1c1_3 ELSE 0 END) AS code_649, MAX(CASE WHEN ba1b1c1_2 = '899' THEN ba1b1c1_3 ELSE 0 END) AS code_899 FROM SSS13_2023_level_14_section_a1_b1_c1 GROUP BY hhid;
+
+-- 4. Calculate means and standard deviations for all codes
+DROP TABLE IF EXISTS SSS13_2023_level_14_section_a1_b1_c1_pivot_stats_summary;
+CREATE TABLE SSS13_2023_level_14_section_a1_b1_c1_pivot_stats_summary AS
+SELECT 
+    -- Food items
+    AVG(CAST(code_099 AS DECIMAL(15,2))) AS mean_099, STDDEV(CAST(code_099 AS DECIMAL(15,2))) AS stddev_099,
+    AVG(CAST(code_129 AS DECIMAL(15,2))) AS mean_129, STDDEV(CAST(code_129 AS DECIMAL(15,2))) AS stddev_129,
+    AVG(CAST(code_139 AS DECIMAL(15,2))) AS mean_139, STDDEV(CAST(code_139 AS DECIMAL(15,2))) AS stddev_139,
+    AVG(CAST(code_159 AS DECIMAL(15,2))) AS mean_159, STDDEV(CAST(code_159 AS DECIMAL(15,2))) AS stddev_159,
+    AVG(CAST(code_169 AS DECIMAL(15,2))) AS mean_169, STDDEV(CAST(code_169 AS DECIMAL(15,2))) AS stddev_169,
+    AVG(CAST(code_179 AS DECIMAL(15,2))) AS mean_179, STDDEV(CAST(code_179 AS DECIMAL(15,2))) AS stddev_179,
+    AVG(CAST(code_189 AS DECIMAL(15,2))) AS mean_189, STDDEV(CAST(code_189 AS DECIMAL(15,2))) AS stddev_189,
+    AVG(CAST(code_199 AS DECIMAL(15,2))) AS mean_199, STDDEV(CAST(code_199 AS DECIMAL(15,2))) AS stddev_199,
+    AVG(CAST(code_219 AS DECIMAL(15,2))) AS mean_219, STDDEV(CAST(code_219 AS DECIMAL(15,2))) AS stddev_219,
+    AVG(CAST(code_239 AS DECIMAL(15,2))) AS mean_239, STDDEV(CAST(code_239 AS DECIMAL(15,2))) AS stddev_239,
+    AVG(CAST(code_249 AS DECIMAL(15,2))) AS mean_249, STDDEV(CAST(code_249 AS DECIMAL(15,2))) AS stddev_249,
+    AVG(CAST(code_269 AS DECIMAL(15,2))) AS mean_269, STDDEV(CAST(code_269 AS DECIMAL(15,2))) AS stddev_269,
+    AVG(CAST(code_279 AS DECIMAL(15,2))) AS mean_279, STDDEV(CAST(code_279 AS DECIMAL(15,2))) AS stddev_279,
+    AVG(CAST(code_289 AS DECIMAL(15,2))) AS mean_289, STDDEV(CAST(code_289 AS DECIMAL(15,2))) AS stddev_289,
+    AVG(CAST(code_299 AS DECIMAL(15,2))) AS mean_299, STDDEV(CAST(code_299 AS DECIMAL(15,2))) AS stddev_299,
+    AVG(CAST(code_309 AS DECIMAL(15,2))) AS mean_309, STDDEV(CAST(code_309 AS DECIMAL(15,2))) AS stddev_309,
+    AVG(CAST(code_319 AS DECIMAL(15,2))) AS mean_319, STDDEV(CAST(code_319 AS DECIMAL(15,2))) AS stddev_319,
+    AVG(CAST(code_329 AS DECIMAL(15,2))) AS mean_329, STDDEV(CAST(code_329 AS DECIMAL(15,2))) AS stddev_329,
+    
+    -- Fuel, clothing, footwear
+    AVG(CAST(code_349 AS DECIMAL(15,2))) AS mean_349, STDDEV(CAST(code_349 AS DECIMAL(15,2))) AS stddev_349,
+    AVG(CAST(code_379 AS DECIMAL(15,2))) AS mean_379, STDDEV(CAST(code_379 AS DECIMAL(15,2))) AS stddev_379,
+    AVG(CAST(code_389 AS DECIMAL(15,2))) AS mean_389, STDDEV(CAST(code_389 AS DECIMAL(15,2))) AS stddev_389,
+    AVG(CAST(code_399 AS DECIMAL(15,2))) AS mean_399, STDDEV(CAST(code_399 AS DECIMAL(15,2))) AS stddev_399,
+    
+    -- Education, health
+    AVG(CAST(code_409 AS DECIMAL(15,2))) AS mean_409, STDDEV(CAST(code_409 AS DECIMAL(15,2))) AS stddev_409,
+    AVG(CAST(code_419 AS DECIMAL(15,2))) AS mean_419, STDDEV(CAST(code_419 AS DECIMAL(15,2))) AS stddev_419,
+    AVG(CAST(code_429 AS DECIMAL(15,2))) AS mean_429, STDDEV(CAST(code_429 AS DECIMAL(15,2))) AS stddev_429,
+    
+    -- Entertainment, toiletries, other consumables
+    AVG(CAST(code_439 AS DECIMAL(15,2))) AS mean_439, STDDEV(CAST(code_439 AS DECIMAL(15,2))) AS stddev_439,
+    AVG(CAST(code_459 AS DECIMAL(15,2))) AS mean_459, STDDEV(CAST(code_459 AS DECIMAL(15,2))) AS stddev_459,
+    AVG(CAST(code_479 AS DECIMAL(15,2))) AS mean_479, STDDEV(CAST(code_479 AS DECIMAL(15,2))) AS stddev_479,
+    AVG(CAST(code_499 AS DECIMAL(15,2))) AS mean_499, STDDEV(CAST(code_499 AS DECIMAL(15,2))) AS stddev_499,
+    
+    -- Conveyance, rent
+    AVG(CAST(code_519 AS DECIMAL(15,2))) AS mean_519, STDDEV(CAST(code_519 AS DECIMAL(15,2))) AS stddev_519,
+    AVG(CAST(code_529 AS DECIMAL(15,2))) AS mean_529, STDDEV(CAST(code_529 AS DECIMAL(15,2))) AS stddev_529,
+    AVG(CAST(code_539 AS DECIMAL(15,2))) AS mean_539, STDDEV(CAST(code_539 AS DECIMAL(15,2))) AS stddev_539,
+    
+    -- Furniture, recreation, crockery
+    AVG(CAST(code_559 AS DECIMAL(15,2))) AS mean_559, STDDEV(CAST(code_559 AS DECIMAL(15,2))) AS stddev_559,
+    AVG(CAST(code_569 AS DECIMAL(15,2))) AS mean_569, STDDEV(CAST(code_569 AS DECIMAL(15,2))) AS stddev_569,
+    AVG(CAST(code_579 AS DECIMAL(15,2))) AS mean_579, STDDEV(CAST(code_579 AS DECIMAL(15,2))) AS stddev_579,
+    
+    -- Appliances, transport, medical equipment
+    AVG(CAST(code_599 AS DECIMAL(15,2))) AS mean_599, STDDEV(CAST(code_599 AS DECIMAL(15,2))) AS stddev_599,
+    AVG(CAST(code_609 AS DECIMAL(15,2))) AS mean_609, STDDEV(CAST(code_609 AS DECIMAL(15,2))) AS stddev_609,
+    AVG(CAST(code_619 AS DECIMAL(15,2))) AS mean_619, STDDEV(CAST(code_619 AS DECIMAL(15,2))) AS stddev_619,
+    
+    -- Other goods, housing, jewellery
+    AVG(CAST(code_629 AS DECIMAL(15,2))) AS mean_629, STDDEV(CAST(code_629 AS DECIMAL(15,2))) AS stddev_629,
+    AVG(CAST(code_639 AS DECIMAL(15,2))) AS mean_639, STDDEV(CAST(code_639 AS DECIMAL(15,2))) AS stddev_639,
+    AVG(CAST(code_649 AS DECIMAL(15,2))) AS mean_649, STDDEV(CAST(code_649 AS DECIMAL(15,2))) AS stddev_649,
+    
+    -- Other taxes
+    AVG(CAST(code_899 AS DECIMAL(15,2))) AS mean_899, STDDEV(CAST(code_899 AS DECIMAL(15,2))) AS stddev_899
+    
+FROM SSS13_2023_level_14_section_a1_b1_c1_pivot
+WHERE hhid IS NOT NULL;
+
+-- 5. Create the z-scores table
+DROP TABLE IF EXISTS SSS13_2023_level_14_section_a1_b1_c1_pivot_hh_zscores;
+CREATE TABLE SSS13_2023_level_14_section_a1_b1_c1_pivot_hh_zscores AS
+SELECT 
+    p.hhid,
+    
+    -- Food items (12 columns)
+    CASE WHEN s.stddev_099 > 0 THEN (COALESCE(CAST(p.code_099 AS DECIMAL(15,2)), 0) - s.mean_099) / s.stddev_099 ELSE 0 END AS z_099,
+    CASE WHEN s.stddev_129 > 0 THEN (COALESCE(CAST(p.code_129 AS DECIMAL(15,2)), 0) - s.mean_129) / s.stddev_129 ELSE 0 END AS z_129,
+    CASE WHEN s.stddev_139 > 0 THEN (COALESCE(CAST(p.code_139 AS DECIMAL(15,2)), 0) - s.mean_139) / s.stddev_139 ELSE 0 END AS z_139,
+    CASE WHEN s.stddev_159 > 0 THEN (COALESCE(CAST(p.code_159 AS DECIMAL(15,2)), 0) - s.mean_159) / s.stddev_159 ELSE 0 END AS z_159,
+    CASE WHEN s.stddev_169 > 0 THEN (COALESCE(CAST(p.code_169 AS DECIMAL(15,2)), 0) - s.mean_169) / s.stddev_169 ELSE 0 END AS z_169,
+    CASE WHEN s.stddev_179 > 0 THEN (COALESCE(CAST(p.code_179 AS DECIMAL(15,2)), 0) - s.mean_179) / s.stddev_179 ELSE 0 END AS z_179,
+    CASE WHEN s.stddev_189 > 0 THEN (COALESCE(CAST(p.code_189 AS DECIMAL(15,2)), 0) - s.mean_189) / s.stddev_189 ELSE 0 END AS z_189,
+    CASE WHEN s.stddev_199 > 0 THEN (COALESCE(CAST(p.code_199 AS DECIMAL(15,2)), 0) - s.mean_199) / s.stddev_199 ELSE 0 END AS z_199,
+    CASE WHEN s.stddev_219 > 0 THEN (COALESCE(CAST(p.code_219 AS DECIMAL(15,2)), 0) - s.mean_219) / s.stddev_219 ELSE 0 END AS z_219,
+    CASE WHEN s.stddev_239 > 0 THEN (COALESCE(CAST(p.code_239 AS DECIMAL(15,2)), 0) - s.mean_239) / s.stddev_239 ELSE 0 END AS z_239,
+    CASE WHEN s.stddev_249 > 0 THEN (COALESCE(CAST(p.code_249 AS DECIMAL(15,2)), 0) - s.mean_249) / s.stddev_249 ELSE 0 END AS z_249,
+    CASE WHEN s.stddev_269 > 0 THEN (COALESCE(CAST(p.code_269 AS DECIMAL(15,2)), 0) - s.mean_269) / s.stddev_269 ELSE 0 END AS z_269,
+    
+    -- Beverages, processed food (4 columns)
+    CASE WHEN s.stddev_279 > 0 THEN (COALESCE(CAST(p.code_279 AS DECIMAL(15,2)), 0) - s.mean_279) / s.stddev_279 ELSE 0 END AS z_279,
+    CASE WHEN s.stddev_289 > 0 THEN (COALESCE(CAST(p.code_289 AS DECIMAL(15,2)), 0) - s.mean_289) / s.stddev_289 ELSE 0 END AS z_289,
+    CASE WHEN s.stddev_299 > 0 THEN (COALESCE(CAST(p.code_299 AS DECIMAL(15,2)), 0) - s.mean_299) / s.stddev_299 ELSE 0 END AS z_299,
+    
+    -- Pan, tobacco, intoxicants (3 columns)
+    CASE WHEN s.stddev_309 > 0 THEN (COALESCE(CAST(p.code_309 AS DECIMAL(15,2)), 0) - s.mean_309) / s.stddev_309 ELSE 0 END AS z_309,
+    CASE WHEN s.stddev_319 > 0 THEN (COALESCE(CAST(p.code_319 AS DECIMAL(15,2)), 0) - s.mean_319) / s.stddev_319 ELSE 0 END AS z_319,
+    CASE WHEN s.stddev_329 > 0 THEN (COALESCE(CAST(p.code_329 AS DECIMAL(15,2)), 0) - s.mean_329) / s.stddev_329 ELSE 0 END AS z_329,
+    
+    -- Fuel, clothing, bedding, footwear (5 columns)
+    CASE WHEN s.stddev_349 > 0 THEN (COALESCE(CAST(p.code_349 AS DECIMAL(15,2)), 0) - s.mean_349) / s.stddev_349 ELSE 0 END AS z_349,
+    CASE WHEN s.stddev_379 > 0 THEN (COALESCE(CAST(p.code_379 AS DECIMAL(15,2)), 0) - s.mean_379) / s.stddev_379 ELSE 0 END AS z_379,
+    CASE WHEN s.stddev_389 > 0 THEN (COALESCE(CAST(p.code_389 AS DECIMAL(15,2)), 0) - s.mean_389) / s.stddev_389 ELSE 0 END AS z_389,
+    CASE WHEN s.stddev_399 > 0 THEN (COALESCE(CAST(p.code_399 AS DECIMAL(15,2)), 0) - s.mean_399) / s.stddev_399 ELSE 0 END AS z_399,
+    
+    -- Education, health (3 columns)
+    CASE WHEN s.stddev_409 > 0 THEN (COALESCE(CAST(p.code_409 AS DECIMAL(15,2)), 0) - s.mean_409) / s.stddev_409 ELSE 0 END AS z_409,
+    CASE WHEN s.stddev_419 > 0 THEN (COALESCE(CAST(p.code_419 AS DECIMAL(15,2)), 0) - s.mean_419) / s.stddev_419 ELSE 0 END AS z_419,
+    CASE WHEN s.stddev_429 > 0 THEN (COALESCE(CAST(p.code_429 AS DECIMAL(15,2)), 0) - s.mean_429) / s.stddev_429 ELSE 0 END AS z_429,
+    
+    -- Entertainment, toiletries, consumables, services (4 columns)
+    CASE WHEN s.stddev_439 > 0 THEN (COALESCE(CAST(p.code_439 AS DECIMAL(15,2)), 0) - s.mean_439) / s.stddev_439 ELSE 0 END AS z_439,
+    CASE WHEN s.stddev_459 > 0 THEN (COALESCE(CAST(p.code_459 AS DECIMAL(15,2)), 0) - s.mean_459) / s.stddev_459 ELSE 0 END AS z_459,
+    CASE WHEN s.stddev_479 > 0 THEN (COALESCE(CAST(p.code_479 AS DECIMAL(15,2)), 0) - s.mean_479) / s.stddev_479 ELSE 0 END AS z_479,
+    CASE WHEN s.stddev_499 > 0 THEN (COALESCE(CAST(p.code_499 AS DECIMAL(15,2)), 0) - s.mean_499) / s.stddev_499 ELSE 0 END AS z_499,
+    
+    -- Conveyance, rent (3 columns)
+    CASE WHEN s.stddev_519 > 0 THEN (COALESCE(CAST(p.code_519 AS DECIMAL(15,2)), 0) - s.mean_519) / s.stddev_519 ELSE 0 END AS z_519,
+    CASE WHEN s.stddev_529 > 0 THEN (COALESCE(CAST(p.code_529 AS DECIMAL(15,2)), 0) - s.mean_529) / s.stddev_529 ELSE 0 END AS z_529,
+    CASE WHEN s.stddev_539 > 0 THEN (COALESCE(CAST(p.code_539 AS DECIMAL(15,2)), 0) - s.mean_539) / s.stddev_539 ELSE 0 END AS z_539,
+    
+    -- Furniture, recreation, crockery (3 columns)
+    CASE WHEN s.stddev_559 > 0 THEN (COALESCE(CAST(p.code_559 AS DECIMAL(15,2)), 0) - s.mean_559) / s.stddev_559 ELSE 0 END AS z_559,
+    CASE WHEN s.stddev_569 > 0 THEN (COALESCE(CAST(p.code_569 AS DECIMAL(15,2)), 0) - s.mean_569) / s.stddev_569 ELSE 0 END AS z_569,
+    CASE WHEN s.stddev_579 > 0 THEN (COALESCE(CAST(p.code_579 AS DECIMAL(15,2)), 0) - s.mean_579) / s.stddev_579 ELSE 0 END AS z_579,
+    
+    -- Appliances, transport equipment, medical equipment (3 columns)
+    CASE WHEN s.stddev_599 > 0 THEN (COALESCE(CAST(p.code_599 AS DECIMAL(15,2)), 0) - s.mean_599) / s.stddev_599 ELSE 0 END AS z_599,
+    CASE WHEN s.stddev_609 > 0 THEN (COALESCE(CAST(p.code_609 AS DECIMAL(15,2)), 0) - s.mean_609) / s.stddev_609 ELSE 0 END AS z_609,
+    CASE WHEN s.stddev_619 > 0 THEN (COALESCE(CAST(p.code_619 AS DECIMAL(15,2)), 0) - s.mean_619) / s.stddev_619 ELSE 0 END AS z_619,
+    
+    -- Other goods, housing, jewellery (3 columns)
+    CASE WHEN s.stddev_629 > 0 THEN (COALESCE(CAST(p.code_629 AS DECIMAL(15,2)), 0) - s.mean_629) / s.stddev_629 ELSE 0 END AS z_629,
+    CASE WHEN s.stddev_639 > 0 THEN (COALESCE(CAST(p.code_639 AS DECIMAL(15,2)), 0) - s.mean_639) / s.stddev_639 ELSE 0 END AS z_639,
+    CASE WHEN s.stddev_649 > 0 THEN (COALESCE(CAST(p.code_649 AS DECIMAL(15,2)), 0) - s.mean_649) / s.stddev_649 ELSE 0 END AS z_649,
+    
+    -- Other taxes (1 column)
+    CASE WHEN s.stddev_899 > 0 THEN (COALESCE(CAST(p.code_899 AS DECIMAL(15,2)), 0) - s.mean_899) / s.stddev_899 ELSE 0 END AS z_899
+
+FROM SSS13_2023_level_14_section_a1_b1_c1_pivot p
+CROSS JOIN SSS13_2023_level_14_section_a1_b1_c1_pivot_stats_summary s
+WHERE p.hhid IS NOT NULL;
+
+-- 6. Add primary keys and indexing for faster operations
+ALTER TABLE SSS13_2023_level_14_section_a1_b1_c1_pivot_hh_zscores 
+ADD PRIMARY KEY (hhid),
+ADD INDEX idx_z_129 (z_129),
+ADD INDEX idx_z_199 (z_199),
+ADD INDEX idx_z_409 (z_409),
+ADD INDEX idx_z_639 (z_639),
+ADD INDEX idx_z_649 (z_649);
+
+
+-- 7. Export to CSV for PSPP 
+SELECT 'hhid', 'z_099', 'z_129', 'z_139', 'z_159', 'z_169', 'z_179', 'z_189', 'z_199', 'z_219', 'z_239', 'z_249', 'z_269', 'z_279', 'z_289', 'z_299', 'z_309', 'z_319', 'z_329', 'z_349', 'z_379', 'z_389', 'z_399', 'z_409', 'z_419', 'z_429', 'z_439', 'z_459', 'z_479', 'z_499', 'z_519', 'z_529', 'z_539', 'z_559', 'z_569', 'z_579', 'z_599', 'z_609', 'z_619', 'z_629', 'z_639', 'z_649', 'z_899'  UNION ALL SELECT hhid, z_099, z_129, z_139, z_159, z_169, z_179, z_189, z_199, z_219, z_239, z_249, z_269, z_279, z_289, z_299, z_309, z_319, z_329, z_349, z_379, z_389, z_399, z_409, z_419, z_429, z_439, z_459, z_479, z_499, z_519, z_529, z_539, z_559, z_569, z_579, z_599, z_609, z_619, z_629, z_639, z_649, z_899 FROM  SSS13_2023_level_14_section_a1_b1_c1_pivot_hh_zscores INTO OUTFILE '/SSS13_2023_level_14_hh_zscores_pspp.csv' FIELDS TERMINATED BY ','  OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\n';

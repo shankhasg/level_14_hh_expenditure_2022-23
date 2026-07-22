@@ -1,0 +1,32 @@
+1. Obtain the authorised HCES 2022-23 Level 14 source data from the url (https://microdata.gov.in/NADA/index.php/catalog/224/get-microdata) after registration and login. One only needs to state the purpose of the data and provide the email id for registration. The filetype format of the downloaded data file [DDI-IND-MOSPI-NSSO-HCES22-23.Nesstar] is nesstar, and the binary to explore the nesstar is included in the package or can be downloaded from the url (https://www.ihsn.org/node/557).
+
+2. In the Nesstar Browser, export Level 14 (Sections A1, B1 and C1) as a delimited text file. Import it into LibreOffice Calc [version 26.2.4.2], save it as CSV, and import the CSV into MySQL as `2023_level_14_section_a1_b1_c1`.
+
+3. Setup a database with a name of your choice, according to the MySQL schema (https://dev.mysql.com/doc/refman/8.4/en/identifiers.html).
+
+4. To import the csv file into MySQL table
+LOAD DATA INFILE '/*.csv' INTO TABLE your_table_name FIELDS TERMINATED BY ','  OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+
+5. To further anonymize the data and create unique household id run the following query in MySQL on the table imported
+
+ALTER TABLE `2023_level_14_section_a1_b1_c1` ADD `hhid` INT(8) NOT NULL FIRST;
+UPDATE `2023_level_14_section_a1_b1_c1` SET `hhid` = CONCAT(`fsu`, `b1q1pt11`, `b1q1pt12`);
+
+6. To drop the unnecessary data (for this dataset) and administrative data, run the following query
+
+ALTER TABLE 2023_level_14_section_a1_b1_c1 DROP COLUMN survey_name, DROP COLUMN year, DROP COLUMN fsu, DROP COLUMN sector, DROP COLUMN state, DROP COLUMN nss_region, DROP COLUMN district, DROP COLUMN stratum, DROP COLUMN sub_stratum, DROP COLUMN panel, DROP COLUMN sub_sample, DROP COLUMN fod_subregion, DROP COLUMN b1q1pt7, DROP COLUMN b1q1pt10, DROP COLUMN b1q1pt11, DROP COLUMN b1q1pt12, DROP COLUMN questionaire_no, DROP COLUMN level, DROP COLUMN multiplier;
+
+References and reasons for concatenated, dropped and retained columns are in the paper.
+
+7. Create the hhid tables with the respective strata
+
+	(i) CREATE TABLE IF NOT EXISTS `2023_hhid_11` AS SELECT DISTINCT `hhid` FROM `2023_level_14_section_a1_b1_c1` WHERE `sector` = '1' AND `b1q1pt11` = '1';
+	(ii) CREATE TABLE IF NOT EXISTS `2023_hhid_12` AS SELECT DISTINCT `hhid` FROM `2023_level_14_section_a1_b1_c1` WHERE `sector` = '1' AND `b1q1pt11` = '2';
+	(iii) CREATE TABLE IF NOT EXISTS `2023_hhid_13` AS SELECT DISTINCT `hhid` FROM `2023_level_14_section_a1_b1_c1` WHERE `sector` = '1' AND `b1q1pt11` = '3';
+	(iv) CREATE TABLE IF NOT EXISTS `2023_hhid_21` AS SELECT DISTINCT `hhid` FROM `2023_level_14_section_a1_b1_c1` WHERE `sector` = '2' AND `b1q1pt11` = '1';
+	(v) CREATE TABLE IF NOT EXISTS `2023_hhid_22` AS SELECT DISTINCT `hhid` FROM `2023_level_14_section_a1_b1_c1` WHERE `sector` = '2' AND `b1q1pt11` = '2';
+	(vi) CREATE TABLE IF NOT EXISTS `2023_hhid_23` AS SELECT DISTINCT `hhid` FROM `2023_level_14_section_a1_b1_c1` WHERE `sector` = '2' AND `b1q1pt11` = '3';
+
+
+
+
